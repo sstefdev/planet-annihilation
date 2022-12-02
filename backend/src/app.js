@@ -1,3 +1,5 @@
+require('module-alias/register');
+require('@utils/env-handler')();
 const express = require('express');
 const cors = require('cors');
 const { pool } = require('./db');

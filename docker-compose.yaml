@@ -1,5 +1,16 @@
 version: "3"
 services:
+  nginx:
+    container_name: "pa-nginx"
+    depends_on:
+      - backend
+      - database
+    restart: always
+    build:
+      dockerfile: "Dockerfile"
+      context: "./nginx"
+    ports:
+      - "3050:80"
   database:
     container_name: "pa-db"
     image: "postgres:15"
@@ -11,6 +22,7 @@ services:
       POSTGRES_DB: "${POSTGRES_DB_NAME}"
       POSTGRES_HOST: host.docker.internal
       POSTGRES_PORT: "${POSTGRES_PORT}"
+      NODE_ENV: "production"
     volumes:
       - database:/var/lib/postgresql/data
     env_file: ./.env
@@ -38,6 +50,7 @@ services:
       POSTGRES_HOST: host.docker.internal
       POSTGRES_PORT: "${POSTGRES_PORT}"
       PORT: "${PORT}"
+      NODE_ENV: "production"
     env_file: ./.env
 
   frontend:

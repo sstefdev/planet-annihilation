@@ -1,7 +1,14 @@
-@import './reset';
+@import '@fontsource/roboto/300.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
 
 * {
 	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Zen Dots', cursive;
 }
 
 html {
@@ -21,5 +28,14 @@ html {
 
 	&::-webkit-scrollbar-thumb:hover {
 		background: rgb(149, 149, 149, 0.7);
+	}
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+
+	&:hover {
+		text-decoration: underline;
 	}
 }

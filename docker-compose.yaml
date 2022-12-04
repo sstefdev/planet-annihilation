@@ -1,4 +1,5 @@
 version: "3"
+
 services:
   nginx:
     container_name: "pa-nginx"
@@ -12,33 +13,42 @@ services:
     ports:
       - "3050:80"
   database:
+    env_file: "./.env"
     container_name: "pa-db"
-    image: "postgres:15"
+    image: "postgres:15-alpine"
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_DB: "${POSTGRES_DB_NAME}"
-      POSTGRES_HOST: host.docker.internal
-      POSTGRES_PORT: "${POSTGRES_PORT}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
       NODE_ENV: "production"
     volumes:
       - database:/var/lib/postgresql/data
-    env_file: ./.env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 2s
-      timeout: 2s
-      retries: 2
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
+    env_file: "./.env"
     container_name: "pa-be"
     depends_on:
       database:
         condition: service_healthy
-    build: "./backend"
-    image: node:latest
+    build:
+      context: "./backend"
+      dockerfile: "./Dockerfile"
+      args:
+        POSTGRES_USER: "${POSTGRES_USER}"
+        POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+        POSTGRES_DB: "${POSTGRES_DB}"
+        POSTGRES_HOST: host.docker.internal
+        PORT: "${PORT}"
+        NODE_ENV: "production"
+    image: node:latest-alpine
     restart: unless-stopped
     ports:
       - "3010:3010"
@@ -46,12 +56,10 @@ services:
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_DB_NAME: "${POSTGRES_DB_NAME}"
-      POSTGRES_HOST: host.docker.internal
-      POSTGRES_PORT: "${POSTGRES_PORT}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_HOST: "${POSTGRES_HOST}"
       PORT: "${PORT}"
       NODE_ENV: "production"
-    env_file: ./.env
 
   frontend:
     container_name: pa-fe

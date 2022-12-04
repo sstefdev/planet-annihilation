@@ -1,6 +1,22 @@
 FROM node:16-alpine
-WORKDIR /app
+
+ARG POSTGRES_USER
+ARG POSTGRES_PASSWORD
+ARG POSTGRES_DB
+ARG POSTGRES_HOST
+ARG NODE_ENV
+
+ENV POSTGRES_USER=${POSTGRES_USER}
+ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+ENV POSTGRES_DB=${POSTGRES_DB}
+ENV POSTGRES_HOST=${POSTGRES_HOST}
+ENV NODE_ENV=${NODE_ENV}
+
+
+WORKDIR /server
 COPY ./package.json ./
-RUN npm install
 COPY . .
-CMD ["npm", "run", "dev"]
+RUN npm i -g sequelize-cli sequelize pg pg-hstore
+RUN npm install
+EXPOSE 3010
+CMD ["npm", "run", "start"]

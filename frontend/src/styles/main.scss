@@ -1,0 +1,25 @@
+@import './reset';
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	&::-webkit-scrollbar {
+		width: 14px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: gray;
+		border-radius: 20px;
+		border: 3px solid white;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background: rgb(149, 149, 149, 0.7);
+	}
+}

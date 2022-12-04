@@ -1,25 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import { Dashboard, Login, Game, EnemyList, Enemy, NotFound } from 'containers';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+	<Routes>
+		<Route path="/" element={<Dashboard />} />
+		<Route path="/login" element={<Login />} />
+		<Route path="/game" element={<Game />} />
+		<Route path="/enemies">
+			<Route index element={<EnemyList />} />
+			<Route path=":id" element={<Enemy />} />
+		</Route>
+		<Route path="*" element={<NotFound />} />
+	</Routes>
+);
 
 export default App;

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Typography, Button, TextField, Box } from '@mui/material';
+import GoogleIcon from '@mui/icons-material/Google';
 
 import { useAppContext } from 'utils/context';
+import axiosInstance from 'utils/axiosInstance';
 
 const Login = () => {
 	const [userInfo, setUserInfo] = useState({ username: '', password: '' });
@@ -13,6 +15,10 @@ const Login = () => {
 
 	const handleLogin = (e) => {
 		e.preventDefault();
+	};
+
+	const handleGoogleLogin = async () => {
+		const user = await axiosInstance('/auth/google');
 	};
 
 	return (
@@ -51,9 +57,14 @@ const Login = () => {
 					name="password"
 					onChange={handleInputChange}
 				/>
-				<Button type="submit" color="primary" variant="contained">
-					Login
-				</Button>
+				<Box sx={{ display: 'flex', gridGap: '16px' }}>
+					<Button type="submit" color="secondary" variant="contained">
+						Login
+					</Button>
+					<Button color="secondary" variant="contained" onClick={handleGoogleLogin}>
+						<GoogleIcon />
+					</Button>
+				</Box>
 			</Box>
 		</>
 	);

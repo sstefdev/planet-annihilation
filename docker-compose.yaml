@@ -59,6 +59,8 @@ services:
       POSTGRES_DB: "${POSTGRES_DB}"
       POSTGRES_HOST: "${POSTGRES_HOST}"
       PORT: "${PORT}"
+      GOOGLE_PLUS_CLIENT_ID: ${GOOGLE_PLUS_CLIENT_ID}
+      GOOGLE_PLUS_CLIENT_SECRET: ${GOOGLE_PLUS_CLIENT_SECRET}
       NODE_ENV: "production"
 
   frontend:
@@ -67,6 +69,8 @@ services:
       - backend
     build:
       context: "./frontend"
+    environment:
+      REACT_APP_BASE_URL: "${REACT_APP_BASE_URL}"
     ports:
       - "3000:3000"
     stdin_open: true

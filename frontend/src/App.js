@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { Dashboard, Login, Game, EnemyList, Enemy, NotFound } from 'containers';
-import { Layout } from 'components';
+import { Layout } from 'components/ui';
 import { useAppContext } from 'utils/context';
 
 const App = () => {

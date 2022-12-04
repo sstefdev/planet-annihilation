@@ -6,9 +6,24 @@ export const ContextProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [enemies, setEnemies] = useState([]);
 	const [planets, setPlanets] = useState([]);
+	const [themeType, setThemeType] = useState('dark');
+	const [isLoading, setIsLoading] = useState(false);
 
 	return (
-		<AppContext.Provider value={{ user, setUser, enemies, setEnemies, planets, setPlanets }}>
+		<AppContext.Provider
+			value={{
+				user,
+				setUser,
+				enemies,
+				setEnemies,
+				planets,
+				setPlanets,
+				themeType,
+				setThemeType,
+				isLoading,
+				setIsLoading,
+			}}
+		>
 			{children}
 		</AppContext.Provider>
 	);

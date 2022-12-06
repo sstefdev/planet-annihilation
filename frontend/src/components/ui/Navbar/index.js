@@ -13,12 +13,13 @@ import {
 	Button,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import { useAppContext } from 'utils/context';
 import { Logo } from 'components/common';
 import IOSSwitch from 'components/mui/Switch';
+import axios from 'utils/axiosInstance';
 
 const pages = [
 	{ label: 'Play', link: '/game' },
@@ -28,9 +29,16 @@ const pages = [
 ];
 
 const Navbar = () => {
-	const { themeType, setThemeType } = useAppContext();
+	const { themeType, setThemeType, user, setUser } = useAppContext();
 	const [anchorElNav, setAnchorElNav] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
+
+	const handleLogout = async () => {
+		const logout = await axios.post('/auth/logout');
+		handleCloseUserMenu();
+		localStorage.removeItem('jwt');
+		setUser(null);
+	};
 
 	const handleOpenNavMenu = (e) => {
 		setAnchorElNav(e.currentTarget);
@@ -123,11 +131,46 @@ const Navbar = () => {
 						onChange={themeChangeHandler}
 					/>
 					<Box sx={{ flexGrow: 0 }}>
-						<Tooltip title="Open settings">
-							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-								<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-							</IconButton>
-						</Tooltip>
+						{user ? (
+							<>
+								{!user.image ? (
+									<Tooltip title="Open settings">
+										<IconButton color="inherit" onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+											<Avatar alt={user.username} src="/static/images/avatar/2.jpg" />
+										</IconButton>
+									</Tooltip>
+								) : (
+									<Tooltip title="Open settings">
+										<Box
+											onClick={handleOpenUserMenu}
+											sx={{
+												justifyContent: 'center',
+												borderRadius: '60px',
+												overflow: 'hidden',
+												maxWidth: '50px',
+												maxHeight: '50px',
+											}}
+										>
+											<img
+												style={{ objectFit: 'cover', width: '100%' }}
+												referrerPolicy="no-referrer"
+												src={user.image}
+												alt={`${user.username} profile image`}
+											/>
+										</Box>
+									</Tooltip>
+								)}
+							</>
+						) : (
+							<Button
+								LinkComponent={Link}
+								onClick={handleCloseNavMenu}
+								sx={{ my: 2, color: themeType === 'light' ? '#041c32' : '#C4D7E0', display: 'block' }}
+								to="/login"
+							>
+								Login
+							</Button>
+						)}
 						<Menu
 							sx={{ mt: '45px' }}
 							id="menu-appbar"
@@ -147,7 +190,7 @@ const Navbar = () => {
 							<MenuItem onClick={handleCloseUserMenu}>
 								<Link to="/">Dashboaard</Link>
 							</MenuItem>
-							<MenuItem onClick={handleCloseUserMenu}>
+							<MenuItem onClick={handleLogout}>
 								<Typography textAlign="center">Logout</Typography>
 							</MenuItem>
 						</Menu>

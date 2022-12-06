@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import { Dashboard, Login, Game, EnemyList, Enemy, NotFound } from 'containers';
+import { Dashboard, LoginAndRegister, Game, EnemyList, Enemy, NotFound } from 'containers';
 import { Layout } from 'components/ui';
 import { useAppContext } from 'utils/context';
 
 const App = () => {
-	const { themeType } = useAppContext();
+	const { themeType, isAuthenticated } = useAppContext();
 
 	const theme = createTheme({
 		palette: {
@@ -27,8 +27,8 @@ const App = () => {
 			<CssBaseline />
 			<Layout>
 				<Routes>
-					<Route path="/" element={<Dashboard />} />
-					<Route path="/login" element={<Login />} />
+					<Route path="/" element={isAuthenticated ? <Dashboard /> : <LoginAndRegister />} />
+					<Route path="/login" element={<LoginAndRegister />} />
 					<Route path="/game" element={<Game />} />
 					<Route path="/enemies">
 						<Route index element={<EnemyList />} />

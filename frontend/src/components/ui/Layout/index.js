@@ -1,8 +1,6 @@
 import { Box } from '@mui/material';
 import { Particles } from 'components/common';
-import Footer from '../Footer';
-import Navbar from '../Navbar';
-import PageWrapper from 'components/ui/PageWrapper';
+import { PageWrapper, Navbar, Footer } from 'components/ui';
 
 const Layout = ({ children }) => {
 	return (

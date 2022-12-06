@@ -1,5 +1,8 @@
-const { Sequelize } = require('sequelize');
-const { database, username, password, host } = require('@sequelize/config/config')[process.env.NODE_ENV];
+const { Sequelize, DataTypes } = require('sequelize');
+const database = process.env.POSTGRES_DB,
+	username = process.env.POSTGRES_USER,
+	password = process.env.POSTGRES_PASSWORD,
+	host = process.env.POSTGRES_HOST;
 
 const sequelize = new Sequelize(database, username, password, {
 	host,
@@ -15,4 +18,4 @@ const checkDbConnection = async () => {
 	}
 };
 
-module.exports = { sequelize, checkDbConnection };
+module.exports = { sequelize, DataTypes, checkDbConnection };

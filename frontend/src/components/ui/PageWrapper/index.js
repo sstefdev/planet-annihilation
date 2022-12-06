@@ -13,9 +13,10 @@ const PageWrapper = ({ children }) => {
 				borderRadius: '20px',
 				justifyContent: 'center',
 				width: '100%',
-				backgroundColor: themeType === 'light' ? '#6e85b771' : '#041c3261',
 				height: 'fit-content',
-				padding: '50px',
+
+				backgroundColor: themeType === 'light' ? '#6e85b771' : '#041c3261',
+				padding: '25px',
 				textAlign: 'center',
 				backdropFilter: 'blur(3px)',
 			}}
@@ -25,8 +26,7 @@ const PageWrapper = ({ children }) => {
 					backgroundColor: themeType === 'light' ? '#6E85B7' : '#041C32',
 					width: '100%',
 					borderRadius: 'inherit',
-					padding: '50px',
-					maxWidth: ' 1300px',
+					padding: '30px',
 				}}
 			>
 				{children}

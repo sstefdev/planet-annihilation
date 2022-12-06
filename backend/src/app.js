@@ -2,18 +2,56 @@ require('module-alias/register');
 require('@utils/env-handler')();
 const express = require('express');
 const cors = require('cors');
-const { checkDbConnection } = require('@config/db');
+const passport = require('passport');
+const session = require('express-session');
+const cookieSession = require('cookie-session');
+const { sequelize, checkDbConnection } = require('@config/db');
 const passportSetup = require('@config/passport-setup');
 const authRoutes = require('@routes/auth-routes');
+const { userRoutes } = require('@routes/user-routes');
 const port = process.env.PORT || 3010;
 const app = express();
 
-app.use(cors());
+// Cors config
+const whitelist = ['http://localhost:3000'];
+const corsOptions = {
+	origin: function (origin, callback) {
+		if (!origin || whitelist.indexOf(origin) !== -1) {
+			callback(null, true);
+		} else {
+			callback(new Error('Not allowed by CORS'));
+		}
+	},
+	methods: 'GET, POST, PUT, DELETE, OPTIONS',
+	credentials: true,
+};
+
+// Cors and body parser
+app.use(cors(corsOptions));
 app.use(express.json());
 
+// Sessions
+app.use(
+	session({
+		secret: 'some secret',
+		name: 'pa-cookie',
+		proxy: true,
+		resave: false,
+		saveUninitialized: true,
+	})
+);
+
+// Init passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Routes
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 checkDbConnection();
 
-app.listen(port, () => console.log(`App listening on port ${port}`));
+// Sequelize db sync
+sequelize.sync().then((req) => {
+	app.listen(port, () => console.log(`App listening on port ${port}`));
+});

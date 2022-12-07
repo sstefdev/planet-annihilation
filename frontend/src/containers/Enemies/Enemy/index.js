@@ -1,4 +1,4 @@
-import styles from './styles.module.scss';
+import React from 'react';
 
 const Enemy = () => {
 	return <div>Enemy</div>;

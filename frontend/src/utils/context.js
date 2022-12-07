@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axiosInstance from './axiosInstance';
+import axios from './axiosInstance';
 
 const AppContext = createContext();
 
@@ -17,14 +17,14 @@ export const ContextProvider = ({ children }) => {
 
 	const updateUser = async (id) => {
 		setIsLoading(true);
-		const { data } = await axiosInstance(`/users?id=${id}`);
+		const { data } = await axios(`/users?id=${id}`);
 		setUser(data);
 		setIsLoading(false);
 	};
 
 	const checkUser = async () => {
 		setIsLoading(true);
-		const { data } = await axiosInstance('/users/token', {
+		const { data } = await axios('/users/token', {
 			headers: {
 				Authorization: jwtToken,
 			},

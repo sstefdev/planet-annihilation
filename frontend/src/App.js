@@ -1,6 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import { Dashboard, LoginAndRegister, Game, EnemyList, Enemy, NotFound } from 'containers';
+import {
+	Dashboard,
+	LoginAndRegister,
+	Game,
+	Enemies,
+	Enemy,
+	Starships,
+	Starship,
+	Planets,
+	Planet,
+	NotFound,
+} from 'containers';
 import { Layout } from 'components/ui';
 import { useAppContext } from 'utils/context';
 
@@ -31,8 +42,16 @@ const App = () => {
 					<Route path="/login" element={<LoginAndRegister />} />
 					<Route path="/game" element={<Game />} />
 					<Route path="/enemies">
-						<Route index element={<EnemyList />} />
+						<Route index element={<Enemies />} />
 						<Route path=":id" element={<Enemy />} />
+					</Route>
+					<Route path="/planets">
+						<Route index element={<Planets />} />
+						<Route path=":id" element={<Planet />} />
+					</Route>
+					<Route path="/spaceships">
+						<Route index element={<Starships />} />
+						<Route path=":id" element={<Starship />} />
 					</Route>
 					<Route path="*" element={<NotFound />} />
 				</Routes>

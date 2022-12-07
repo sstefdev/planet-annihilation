@@ -1,6 +1,10 @@
 export { default as Dashboard } from './Dashboard';
 export { default as LoginAndRegister } from './LoginAndRegister';
 export { default as Game } from './Game';
-export { default as EnemyList } from './EnemyList';
-export { default as Enemy } from './Enemy';
+export { default as Enemies } from './Enemies';
+export { default as Enemy } from './Enemies/Enemy';
+export { default as Planets } from './Planets';
+export { default as Planet } from './Planets/Planet';
+export { default as Starships } from './Starships';
+export { default as Starship } from './Starships/Starship';
 export { default as NotFound } from './NotFound';

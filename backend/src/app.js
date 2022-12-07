@@ -4,7 +4,6 @@ const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
 require('@config/passport-setup');
-require('@models');
 const session = require('express-session');
 const { sequelize, checkDbConnection } = require('@config/db');
 const authRoutes = require('@routes/auth-routes');

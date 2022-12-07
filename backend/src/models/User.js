@@ -1,3 +1,6 @@
+require('@models/Starship');
+require('@models/Planet');
+require('@models/Enemy');
 const { sequelize, DataTypes } = require('../config/db');
 const Highscore = require('./Highscore');
 

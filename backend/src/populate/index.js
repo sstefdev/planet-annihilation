@@ -1,1 +1,1 @@
-module.exports = [require('./Enemy'), require('./Planet'), require('./Starship')];
+module.exports = [require('./Starship'), require('./Planet'), require('./Enemy')];

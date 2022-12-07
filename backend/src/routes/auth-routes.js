@@ -5,7 +5,6 @@ const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
 
 const { userExists } = require('@routes/user-routes');
-const User = require('../models/User');
 
 router.post('/register', async (req, res) => {
 	try {

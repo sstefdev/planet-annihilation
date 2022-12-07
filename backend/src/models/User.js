@@ -1,8 +1,8 @@
+require('@models/Starship');
+require('@models/Planet');
+require('@models/Enemy');
 const { sequelize, DataTypes } = require('../config/db');
 const Highscore = require('./Highscore');
-const Planet = require('./Planet');
-const Starship = require('./Starship');
-const Enemy = require('./Enemy');
 
 const User = sequelize.define('User', {
 	username: {
@@ -20,14 +20,6 @@ const User = sequelize.define('User', {
 	google_id: {
 		type: DataTypes.STRING,
 	},
-});
-
-User.hasOne(Planet, {
-	foreignKey: 'user_id',
-});
-
-User.hasMany(Starship, {
-	foreignKey: 'user_id',
 });
 
 User.hasMany(Highscore, {

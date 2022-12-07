@@ -35,6 +35,8 @@
 		"@utils": "./utils",
 		"@sequelize": "./sequelize",
 		"@config": "./src/config",
-		"@routes": "./src/routes"
+		"@routes": "./src/routes",
+		"@populate": "./src/populate",
+		"@models": "./src/models"
 	}
 }

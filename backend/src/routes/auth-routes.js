@@ -3,9 +3,8 @@ const router = require('express').Router();
 const passport = require('passport');
 const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
-
+const User = require('@models/User');
 const { userExists } = require('@routes/user-routes');
-const User = require('../models/User');
 
 router.post('/register', async (req, res) => {
 	try {
@@ -37,7 +36,7 @@ router.post('/register', async (req, res) => {
 	}
 });
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', async (req, res) => {
 	const { password, email } = req.body;
 	const user = await userExists('email', email);
 	if (user.length < 1) {

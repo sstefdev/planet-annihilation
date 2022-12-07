@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('@models/User');
 
 const authenticateToken = (req, res, next) => {
 	const authHeader = req.headers['authorization'];
@@ -48,12 +48,32 @@ router.get('/token', authenticateToken, (req, res) => {
 	res.status(200).json(req.user);
 });
 
-router.put('/', (req, res) => {
-	res.send('delete');
+router.put('/', async (req, res) => {
+	try {
+		const { id } = req.body;
+		const user = await User.update(req.body, {
+			where: {
+				id,
+			},
+		});
+		res.status(200).json(user);
+	} catch (err) {
+		console.log(err);
+	}
 });
 
 router.delete('/', (req, res) => {
-	res.send('delete');
+	try {
+		const { id } = req.body;
+		const user = User.destroy({
+			where: {
+				id,
+			},
+		});
+		res.status(200).json(user);
+	} catch (err) {
+		console.log(err);
+	}
 });
 
 module.exports = { userRoutes: router, userExists };

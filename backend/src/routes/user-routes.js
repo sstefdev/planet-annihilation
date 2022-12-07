@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const { sequelize, DataTypes } = require('@config/db');
-const Users = require('../models/Users')(sequelize, DataTypes);
+const User = require('../models/User');
 
 const authenticateToken = (req, res, next) => {
 	const authHeader = req.headers['authorization'];
@@ -18,7 +17,7 @@ const authenticateToken = (req, res, next) => {
 
 const userExists = async (key, value) => {
 	try {
-		const user = await Users.findAll({
+		const user = await User.findAll({
 			where: {
 				[key]: value,
 			},
@@ -46,7 +45,7 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
 });
 
 router.get('/token', authenticateToken, (req, res) => {
-	res.json(req.user);
+	res.status(200).json(req.user);
 });
 
 router.put('/', (req, res) => {

@@ -5,11 +5,14 @@ import axios from 'utils/axiosInstance';
 import { useAppContext } from 'utils/context';
 import { useNavigate } from 'react-router-dom';
 
+const loginFields = ['email', 'password'];
+const registerFields = ['username', 'email', 'password', 'confirmPassword'];
+
 const LoginAndRegister = () => {
 	const navigate = useNavigate();
 	const { setUser, setIsAuthenticated } = useAppContext();
 	const [userInfo, setUserInfo] = useState({ email: '', password: '' });
-	const [registerInfo, setRegisterInfo] = useState({ email: '', password: '', password: '', confirmPassword: '' });
+	const [registerInfo, setRegisterInfo] = useState({ username: '', email: '', password: '', confirmPassword: '' });
 	const [modalState, setModalState] = useState(0);
 
 	const handleInputChange = (e, type) => {
@@ -38,8 +41,8 @@ const LoginAndRegister = () => {
 		e.preventDefault();
 		const { data } = await axios.post(`/auth/${type}`, type === 'login' ? { ...userInfo } : { ...registerInfo });
 		setUser(data.user);
-		if (data.user.token) localStorage.setItem('jwt', data.user.token);
-		navigate('/');
+		if (data?.user?.token) localStorage.setItem('jwt', data.user.token);
+		if (type === 'register') setModalState(0);
 	};
 
 	const handleGoogleLogin = async () => {
@@ -65,24 +68,19 @@ const LoginAndRegister = () => {
 						marginTop: '40px',
 					}}
 				>
-					<TextField
-						type="text"
-						sx={{ width: '100%', maxWidth: '500px' }}
-						id="email"
-						label="Email"
-						variant="filled"
-						name="email"
-						onChange={(e) => handleInputChange(e, 'login')}
-					/>
-					<TextField
-						type="password"
-						sx={{ width: '100%', maxWidth: '500px' }}
-						id="password"
-						label="Password"
-						variant="filled"
-						name="password"
-						onChange={(e) => handleInputChange(e, 'login')}
-					/>
+					{loginFields.map((field) => (
+						<TextField
+							key={field}
+							type={field === 'password' ? 'password' : 'text'}
+							sx={{ width: '100%', maxWidth: '500px' }}
+							id={field}
+							label={field[0].toUpperCase() + field.slice(1)}
+							variant="filled"
+							name={field}
+							onChange={(e) => handleInputChange(e, 'login')}
+							value={userInfo[field]}
+						/>
+					))}
 					<Box sx={{ display: 'flex', gridGap: '16px', marginBottom: '16px' }}>
 						<Button type="submit" color="secondary" variant="contained">
 							Login
@@ -105,42 +103,19 @@ const LoginAndRegister = () => {
 						marginTop: '40px',
 					}}
 				>
-					<TextField
-						type="text"
-						sx={{ width: '100%', maxWidth: '500px' }}
-						id="username"
-						label="Username"
-						variant="filled"
-						name="username"
-						onChange={handleInputChange}
-					/>
-					<TextField
-						type="text"
-						sx={{ width: '100%', maxWidth: '500px' }}
-						id="email"
-						label="Email"
-						variant="filled"
-						name="email"
-						onChange={handleInputChange}
-					/>
-					<TextField
-						type="password"
-						sx={{ width: '100%', maxWidth: '500px' }}
-						id="password"
-						label="Password"
-						variant="filled"
-						name="password"
-						onChange={handleInputChange}
-					/>
-					<TextField
-						type="password"
-						sx={{ width: '100%', maxWidth: '500px' }}
-						id="password-repeat"
-						label="Confirm Password"
-						variant="filled"
-						name="confirmPassword"
-						onChange={handleInputChange}
-					/>
+					{registerFields.map((field) => (
+						<TextField
+							key={field}
+							type={field === 'password' || field === 'confirmPassword' ? 'password' : 'text'}
+							sx={{ width: '100%', maxWidth: '500px' }}
+							id={field}
+							label={field[0].toUpperCase() + field.slice(1).replace('P', ' p')}
+							variant="filled"
+							name={field}
+							onChange={(e) => handleInputChange(e, 'register')}
+							value={registerInfo[field]}
+						/>
+					))}
 					<Box sx={{ display: 'flex', gridGap: '16px', marginBottom: '16px' }}>
 						<Button disabled={validateRegisterInfo()} type="submit" color="secondary" variant="contained">
 							Register

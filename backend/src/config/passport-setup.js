@@ -4,9 +4,8 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
-const { sequelize, DataTypes } = require('./db');
 const { userExists } = require('@routes/user-routes');
-const Users = require('../models/Users')(sequelize, DataTypes);
+const User = require('../models/User');
 
 let opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
@@ -26,7 +25,7 @@ passport.use(
 				if (user.length > 0) {
 					return done(null, user[0], accesToken);
 				} else {
-					const user = await Users.create({
+					const user = await User.create({
 						email: emails[0].value,
 						username: displayName,
 						image: photos[0].value,

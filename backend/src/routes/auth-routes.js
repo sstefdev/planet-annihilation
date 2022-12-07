@@ -4,9 +4,8 @@ const passport = require('passport');
 const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
 
-const { sequelize, DataTypes } = require('@config/db');
 const { userExists } = require('@routes/user-routes');
-const Users = require('../models/Users')(sequelize, DataTypes);
+const User = require('../models/User');
 
 router.post('/register', async (req, res) => {
 	try {
@@ -23,7 +22,7 @@ router.post('/register', async (req, res) => {
 			bcrypt.genSalt(10, (err, salt) => {
 				bcrypt.hash(password, salt, async (err, hash) => {
 					if (err) throw err;
-					const user = await Users.create({
+					const user = await User.create({
 						email,
 						username,
 						image,
@@ -34,7 +33,6 @@ router.post('/register', async (req, res) => {
 			});
 		}
 	} catch (err) {
-		console.log(err);
 		res.status(500).send('Something went wrong.');
 	}
 });

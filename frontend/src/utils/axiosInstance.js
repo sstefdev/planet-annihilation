@@ -5,9 +5,6 @@ const jwt = localStorage.getItem('jwt');
 
 const axiosInstance = axios.create({
 	baseURL: `${baseURL}/api`,
-	headers: {
-		Authorization: jwt,
-	},
 	withCredentials: true,
 });
 

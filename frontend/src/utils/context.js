@@ -24,7 +24,11 @@ export const ContextProvider = ({ children }) => {
 
 	const checkUser = async () => {
 		setIsLoading(true);
-		const { data } = await axiosInstance('/users/token');
+		const { data } = await axiosInstance('/users/token', {
+			headers: {
+				Authorization: jwtToken,
+			},
+		});
 		if (data) {
 			setUser(data);
 		}

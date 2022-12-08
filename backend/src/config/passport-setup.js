@@ -4,7 +4,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('@models/User');
-const { userExists } = require('@routes/user-routes');
+const { userExists } = require('@utils');
 
 let opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
@@ -17,12 +17,11 @@ passport.use(
 			clientID: process.env.GOOGLE_PLUS_CLIENT_ID,
 			clientSecret: process.env.GOOGLE_PLUS_CLIENT_SECRET,
 		},
-		async (accesToken, _refreshToken, { id, displayName, photos, emails }, done) => {
+		async (_accesToken, _refreshToken, { id, displayName, photos, emails }, done) => {
 			try {
 				const user = await userExists('google_id', id);
-
 				if (user.length > 0) {
-					return done(null, user[0], accesToken);
+					return done(null, user[0]);
 				} else {
 					const user = await User.create({
 						email: emails[0].value,
@@ -30,9 +29,11 @@ passport.use(
 						image: photos[0].value,
 						google_id: id,
 					});
-					return done(null, user[0], accesToken);
+
+					return done(null, { id, displayName, photos, emails });
 				}
 			} catch (err) {
+				console.log('ERR', err);
 				done(err);
 			}
 		}
@@ -44,7 +45,7 @@ passport.use(
 		try {
 			const user = await userExists('id', jwt_payload.id);
 			if (user.length > 0) {
-				return done(null, user[0]);
+				return done(null, user[0].dataValues);
 			} else {
 				return done(null, false);
 			}
@@ -55,13 +56,14 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-	done(null, user.id);
+	done(null, user);
 });
 
 passport.deserializeUser(async (id, done) => {
+	console.log('DESERIALIZE USER', id);
 	try {
-		const user = userExists('google_id', id);
-		done(null, user.id);
+		const user = userExists('id', id);
+		done(null, id);
 	} catch (err) {
 		done(err);
 	}

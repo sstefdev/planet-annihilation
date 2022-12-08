@@ -4,7 +4,7 @@ const passport = require('passport');
 const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
 const User = require('@models/User');
-const { userExists } = require('@routes/user-routes');
+const { userExists } = require('@utils');
 
 router.post('/register', async (req, res) => {
 	try {
@@ -85,7 +85,8 @@ router.get(
 );
 
 router.get('/google/redirect', passport.authenticate('google', { session: false }), async (req, res) => {
-	res.redirect(`http://localhost:3000/?user_id=${req.user.dataValues.id}`);
+	console.log(req.user);
+	res.redirect(`http://localhost:3000/${req.user.id}`);
 });
 
 module.exports = router;

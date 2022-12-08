@@ -1,7 +1,6 @@
 const { sequelize } = require('@config/db');
 
 sequelize.models.Enemy.findAll().then((data) => {
-	console.log(`Found ${data.length} enemies`);
 	if (data.length === 0) {
 		sequelize.models.Enemy.bulkCreate([
 			{

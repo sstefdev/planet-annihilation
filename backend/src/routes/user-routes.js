@@ -1,37 +1,12 @@
 const router = require('express').Router();
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
+const { userExists } = require('@utils');
 const User = require('@models/User');
 
-const authenticateToken = (req, res, next) => {
-	const authHeader = req.headers['authorization'];
-	const token = authHeader && authHeader.split(' ')[1];
-	if (token == null) return res.status(401);
-
-	jwt.verify(token, 'some secret', (err, user) => {
-		if (err) return res.status(403);
-		req.user = user;
-		next();
-	});
-};
-
-const userExists = async (key, value) => {
+router.get('/google-id/:id', async (req, res) => {
 	try {
-		const user = await User.findAll({
-			where: {
-				[key]: value,
-			},
-		});
-		return user;
-	} catch (err) {
-		throw new Error(err);
-	}
-};
-
-router.get('/', async (req, res) => {
-	try {
-		const { id } = req.query;
-		const user = await userExists('id', id);
+		const { id } = req.params;
+		const user = await userExists('google_id', id);
 		res.status(200).json(user[0]);
 	} catch (err) {
 		res.status(404).send('No user found.');
@@ -39,41 +14,40 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-	const { dataValues } = req.user;
-	const { password, ...rest } = dataValues;
-	res.json(rest);
+	const { password, ...rest } = req.user;
+	res.status(200).json(rest);
 });
 
-router.get('/token', authenticateToken, (req, res) => {
-	res.status(200).json(req.user);
-});
-
-router.put('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
 	try {
-		const { id } = req.body;
-		const user = await User.update(req.body, {
-			where: {
-				id,
-			},
-		});
-		res.status(200).json(user);
+		const userData = req.body;
+		const { id } = req.params;
+		const user = await User.update(
+			{ ...userData },
+			{
+				where: {
+					id,
+				},
+			}
+		);
+		res.status(200).json({ message: 'User updated', user });
 	} catch (err) {
 		console.log(err);
 	}
 });
 
-router.delete('/', (req, res) => {
+router.delete('/:id', async (req, res) => {
 	try {
-		const { id } = req.body;
-		const user = User.destroy({
+		const { id } = req.params;
+		const user = await User.destroy({
 			where: {
 				id,
 			},
 		});
-		res.status(200).json(user);
+		res.status(200).json({ message: 'User deleted' });
 	} catch (err) {
 		console.log(err);
 	}
 });
 
-module.exports = { userRoutes: router, userExists };
+module.exports = router;

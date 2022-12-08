@@ -5,7 +5,7 @@ import axios from './axiosInstance';
 const AppContext = createContext();
 
 export const ContextProvider = ({ children }) => {
-	const { search } = useLocation();
+	const { pathname } = useLocation();
 	const navigate = useNavigate();
 	const [user, setUser] = useState(null);
 	const [enemies, setEnemies] = useState([]);
@@ -13,18 +13,18 @@ export const ContextProvider = ({ children }) => {
 	const [themeType, setThemeType] = useState('dark');
 	const [isLoading, setIsLoading] = useState(false);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [jwtToken, _setJwtToken] = useState(localStorage.getItem('jwt'));
+	const [jwtToken, setJwtToken] = useState(localStorage.getItem('jwt'));
 
-	const updateUser = async (id) => {
+	const refreshUser = async (id) => {
 		setIsLoading(true);
-		const { data } = await axios(`/users?id=${id}`);
+		const { data } = await axios(`/users/google-id/${id}`);
 		setUser(data);
 		setIsLoading(false);
 	};
 
 	const checkUser = async () => {
 		setIsLoading(true);
-		const { data } = await axios('/users/token', {
+		const { data } = await axios('/users/current', {
 			headers: {
 				Authorization: jwtToken,
 			},
@@ -36,16 +36,16 @@ export const ContextProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		if (!user) checkUser();
+		if (!user && jwtToken) checkUser();
 	}, [user, jwtToken]);
 
 	useEffect(() => {
-		if (search) {
-			const userId = search?.split('=')[1];
-			if (userId) updateUser(userId);
+		const userId = pathname.slice(1);
+		if (userId > 0) {
+			refreshUser(userId);
 			navigate('/');
 		}
-	}, [search]);
+	}, [pathname]);
 
 	useEffect(() => {
 		if (user) {
@@ -70,6 +70,7 @@ export const ContextProvider = ({ children }) => {
 				setIsLoading,
 				isAuthenticated,
 				setIsAuthenticated,
+				setJwtToken,
 			}}
 		>
 			{children}

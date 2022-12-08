@@ -1,7 +1,6 @@
 const { sequelize } = require('@config/db');
 
 sequelize.models.Starship.findAll().then((data) => {
-	console.log(`Found ${data.length} starships`);
 	if (data.length === 0) {
 		sequelize.models.Starship.bulkCreate([
 			{

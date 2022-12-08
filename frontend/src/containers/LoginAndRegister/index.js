@@ -10,7 +10,7 @@ const registerFields = ['username', 'email', 'password', 'confirmPassword'];
 
 const LoginAndRegister = () => {
 	const navigate = useNavigate();
-	const { setUser, setIsAuthenticated } = useAppContext();
+	const { setUser } = useAppContext();
 	const [userInfo, setUserInfo] = useState({ email: '', password: '' });
 	const [registerInfo, setRegisterInfo] = useState({ username: '', email: '', password: '', confirmPassword: '' });
 	const [modalState, setModalState] = useState(0);
@@ -42,7 +42,11 @@ const LoginAndRegister = () => {
 		const { data } = await axios.post(`/auth/${type}`, type === 'login' ? { ...userInfo } : { ...registerInfo });
 		setUser(data.user);
 		if (data?.user?.token) localStorage.setItem('jwt', data.user.token);
-		if (type === 'register') setModalState(0);
+		if (type === 'register') {
+			setModalState(0);
+		} else {
+			navigate('/');
+		}
 	};
 
 	const handleGoogleLogin = async () => {

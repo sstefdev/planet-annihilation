@@ -29,7 +29,8 @@ const pages = [
 ];
 
 const Navbar = () => {
-	const { themeType, setThemeType, user, setUser } = useAppContext();
+	const navigate = useNavigate();
+	const { themeType, setThemeType, user, setUser, setIsAuthenticated, setJwtToken } = useAppContext();
 	const [anchorElNav, setAnchorElNav] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -38,6 +39,9 @@ const Navbar = () => {
 		handleCloseUserMenu();
 		localStorage.removeItem('jwt');
 		setUser(null);
+		setIsAuthenticated(false);
+		setJwtToken(null);
+		navigate('/login');
 	};
 
 	const handleOpenNavMenu = (e) => {

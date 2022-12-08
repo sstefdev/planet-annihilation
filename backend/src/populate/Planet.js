@@ -1,7 +1,6 @@
 const { sequelize } = require('@config/db');
 
 sequelize.models.Planet.findAll().then((data) => {
-	console.log(`Found ${data.length} planets.`);
 	if (data.length === 0) {
 		sequelize.models.Planet.bulkCreate([
 			{

@@ -6,8 +6,6 @@ const passport = require('passport');
 require('@config/passport-setup');
 const session = require('express-session');
 const { sequelize, checkDbConnection } = require('@config/db');
-const authRoutes = require('@routes/auth-routes');
-const { userRoutes } = require('@routes/user-routes');
 const port = process.env.PORT || 3010;
 const app = express();
 
@@ -36,7 +34,12 @@ app.use(
 		name: 'pa-cookie',
 		proxy: true,
 		resave: false,
-		saveUninitialized: true,
+		saveUninitialized: false,
+		cookie: {
+			httpOnly: true,
+			sameSite: 'none', //<===
+			expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+		},
 	})
 );
 
@@ -45,10 +48,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api/auth', require('@routes/auth-routes'));
+app.use('/api/users', require('@routes/user-routes'));
+app.use('/api/highscores', require('@routes/highscore-routes'));
+app.use('/api/planets', require('@routes/planet-routes'));
+app.use('/api/starships', require('@routes/starship-routes'));
+app.use('/api/enemies', require('@routes/enemy-routes'));
 
-// Check db connection and populate db
 checkDbConnection();
 
 // Sequelize db sync

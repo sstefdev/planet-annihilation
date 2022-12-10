@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { fetchGoogleUser, fetchUser, fetchAllPlanets, fetchAllStarships, fetchAllEnemies } from './api';
 import axios from './axiosInstance';
 
 const AppContext = createContext();
@@ -10,6 +11,7 @@ export const ContextProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [enemies, setEnemies] = useState([]);
 	const [planets, setPlanets] = useState([]);
+	const [starships, setStarships] = useState([]);
 	const [themeType, setThemeType] = useState('dark');
 	const [isLoading, setIsLoading] = useState(false);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -17,23 +19,46 @@ export const ContextProvider = ({ children }) => {
 
 	const refreshUser = async (id) => {
 		setIsLoading(true);
-		const { data } = await axios(`/users/google-id/${id}`);
-		setUser(data);
+		const googleUser = await fetchGoogleUser(id);
+		setUser(googleUser);
 		setIsLoading(false);
 	};
 
 	const checkUser = async () => {
 		setIsLoading(true);
-		const { data } = await axios('/users/current', {
-			headers: {
-				Authorization: jwtToken,
-			},
-		});
-		if (data) {
-			setUser(data);
+		const user = await fetchUser(jwtToken);
+		if (user) {
+			setUser(user);
 		}
 		setIsLoading(false);
 	};
+
+	const fetchPlanets = async () => {
+		setIsLoading(true);
+		const planets = await fetchAllPlanets();
+		setPlanets(planets);
+		setIsLoading(false);
+	};
+
+	const fetchStarships = async () => {
+		setIsLoading(true);
+		const starships = await fetchAllStarships();
+		setStarships(starships);
+		setIsLoading(false);
+	};
+
+	const fetchEnemies = async () => {
+		setIsLoading(true);
+		const enemies = await fetchAllEnemies();
+		setEnemies(enemies);
+		setIsLoading(false);
+	};
+
+	useEffect(() => {
+		fetchPlanets();
+		fetchStarships();
+		fetchEnemies();
+	}, []);
 
 	useEffect(() => {
 		if (!user && jwtToken) checkUser();
@@ -64,6 +89,8 @@ export const ContextProvider = ({ children }) => {
 				setEnemies,
 				planets,
 				setPlanets,
+				starships,
+				setStarships,
 				themeType,
 				setThemeType,
 				isLoading,

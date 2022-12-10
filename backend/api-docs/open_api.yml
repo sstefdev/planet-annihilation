@@ -1,0 +1,480 @@
+openapi: 3.0.0
+info:
+  title: Planet Anhiliation Tubics
+  version: 1.0.0
+servers:
+  - url: http://{{baseurl}}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: auth
+  - name: users
+  - name: highscore
+  - name: planets
+  - name: starships
+  - name: enemies
+  - name: game
+paths:
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: neca@gmail.com
+                password: pass1234
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/logout:
+    get:
+      tags:
+        - auth
+      summary: Logout
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/google/redirect:
+    get:
+      tags:
+        - auth
+      summary: Login Google
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: Register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: neca
+                email: neca@gmail.com
+                password: pass1234
+                image: url
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users/current:
+    get:
+      tags:
+        - users
+      summary: Current User with JWT
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users/google-id/{id}:
+    get:
+      tags:
+        - users
+      summary: Get Google User
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users/{id}:
+    put:
+      tags:
+        - users
+      summary: Update User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: name
+                email: email@gmail.com
+                password: pass1234
+                image: url
+                google_id: 1
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - users
+      summary: Delete User
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /highscores:
+    get:
+      tags:
+        - highscore
+      summary: Get all Highscores
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - highscore
+      summary: Create new Highscore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                highscore: 420
+                user_id: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /highscores/{id}:
+    get:
+      tags:
+        - highscore
+      summary: Get single Highscore by user_id
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - highscore
+      summary: Delete Highscore
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /planets:
+    get:
+      tags:
+        - planets
+      summary: Get all Planets
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - planets
+      summary: Create new Planet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: planet name
+                description: planet descr
+                image: url
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /planets/{id}:
+    get:
+      tags:
+        - planets
+      summary: Get sinlge Planet
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - planets
+      summary: Update Planet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: planet name
+                description: planet descr
+                image: url
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - planets
+      summary: Delete Planet
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /starships:
+    get:
+      tags:
+        - starships
+      summary: Get all Starships
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - starships
+      summary: Create new Starship
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: starship name
+                description: starship descr
+                image: url
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /starships/{id}:
+    get:
+      tags:
+        - starships
+      summary: Get sinlge Starship
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - starships
+      summary: Update Starship
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: starship name
+                description: starship descr
+                image: url
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - starships
+      summary: Delete Planet
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /enemies:
+    get:
+      tags:
+        - enemies
+      summary: Get all Enemies
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - enemies
+      summary: Create new Enemy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: enemy name
+                description: enemy descr
+                image: url
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /enemies/{id}:
+    get:
+      tags:
+        - enemies
+      summary: Get sinlge Enemy
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - enemies
+      summary: Update Starship
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: enemy name
+                description: enemy descr
+                image: url
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - enemies
+      summary: Delete Planet
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /army:
+    post:
+      tags:
+        - game
+      summary: Create an army
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                strength: 1000
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

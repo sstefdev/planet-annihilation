@@ -1,0 +1,802 @@
+{
+	"info": {
+		"_postman_id": "3cd8ebfc-1849-4190-958d-90c2c6072ed2",
+		"name": "Planet Anhiliation Tubics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14147390"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"neca@gmail.com\",\n    \"password\": \"pass1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Google",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/google/redirect",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"google",
+								"redirect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"neca\",\n    \"email\": \"neca@gmail.com\",\n    \"password\": \"pass1234\",\n    \"image\": \"url\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Current User with JWT",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJuZWNhIiwiZW1haWwiOiJuZWNhQGdtYWlsLmNvbSIsImltYWdlIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci82NWZlY2E3NDg0NzE3ZTRmMTMyMjk3NmZjMDUyYTRkYj9zPTIwMCZyPXBnJmQ9bW0iLCJpYXQiOjE2NzA0MzYyMjIsImV4cCI6MTY3MDQzOTgyMn0.6ZwdNHXmPf3uHXjLUhVScI-EzR18v9x4rX11O-VWJVM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/current",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Google User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/google-id/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"google-id",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"name\",\n    \"email\": \"email@gmail.com\",\n    \"password\": \"pass1234\",\n    \"image\": \"url\",\n    \"google_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "highscore",
+			"item": [
+				{
+					"name": "Get all Highscores",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJuZWNhIiwiZW1haWwiOiJuZWNhQGdtYWlsLmNvbSIsImltYWdlIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci82NWZlY2E3NDg0NzE3ZTRmMTMyMjk3NmZjMDUyYTRkYj9zPTIwMCZyPXBnJmQ9bW0iLCJpYXQiOjE2NzA0MzYyMjIsImV4cCI6MTY3MDQzOTgyMn0.6ZwdNHXmPf3uHXjLUhVScI-EzR18v9x4rX11O-VWJVM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/highscores",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"highscores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get single Highscore by user_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/highscores/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"highscores",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Highscore",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"highscore\": 420,\n    \"user_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/highscores",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"highscores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Highscore",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/highscores/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"highscores",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "planets",
+			"item": [
+				{
+					"name": "Get all Planets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJuZWNhIiwiZW1haWwiOiJuZWNhQGdtYWlsLmNvbSIsImltYWdlIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci82NWZlY2E3NDg0NzE3ZTRmMTMyMjk3NmZjMDUyYTRkYj9zPTIwMCZyPXBnJmQ9bW0iLCJpYXQiOjE2NzA0MzYyMjIsImV4cCI6MTY3MDQzOTgyMn0.6ZwdNHXmPf3uHXjLUhVScI-EzR18v9x4rX11O-VWJVM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/planets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"planets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sinlge Planet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/planets/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"planets",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Planet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"planet name\",\n    \"description\": \"planet descr\",\n    \"image\": \"url\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/planets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"planets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Planet",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"planet name\",\n    \"description\": \"planet descr\",\n    \"image\": \"url\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/planets/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"planets",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Planet",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/planets/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"planets",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "starships",
+			"item": [
+				{
+					"name": "Get all Starships",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJuZWNhIiwiZW1haWwiOiJuZWNhQGdtYWlsLmNvbSIsImltYWdlIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci82NWZlY2E3NDg0NzE3ZTRmMTMyMjk3NmZjMDUyYTRkYj9zPTIwMCZyPXBnJmQ9bW0iLCJpYXQiOjE2NzA0MzYyMjIsImV4cCI6MTY3MDQzOTgyMn0.6ZwdNHXmPf3uHXjLUhVScI-EzR18v9x4rX11O-VWJVM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/starships",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"starships"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sinlge Starship",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/starships/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"starships",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Starship",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"starship name\",\n    \"description\": \"starship descr\",\n    \"image\": \"url\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/starships",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"starships"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Starship",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"starship name\",\n    \"description\": \"starship descr\",\n    \"image\": \"url\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/starships/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"starships",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Planet",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/starships/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"starships",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "enemies",
+			"item": [
+				{
+					"name": "Get all Enemies",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJuZWNhIiwiZW1haWwiOiJuZWNhQGdtYWlsLmNvbSIsImltYWdlIjoiLy93d3cuZ3JhdmF0YXIuY29tL2F2YXRhci82NWZlY2E3NDg0NzE3ZTRmMTMyMjk3NmZjMDUyYTRkYj9zPTIwMCZyPXBnJmQ9bW0iLCJpYXQiOjE2NzA0MzYyMjIsImV4cCI6MTY3MDQzOTgyMn0.6ZwdNHXmPf3uHXjLUhVScI-EzR18v9x4rX11O-VWJVM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/enemies",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"enemies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sinlge Enemy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/enemies/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"enemies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new Enemy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"enemy name\",\n    \"description\": \"enemy descr\",\n    \"image\": \"url\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/enemies",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"enemies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Starship",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"enemy name\",\n    \"description\": \"enemy descr\",\n    \"image\": \"url\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/enemies/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"enemies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Planet",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/enemies/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"enemies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "game",
+			"item": [
+				{
+					"name": "Create an army",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"strength\": 1000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/army",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"army"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3010/api",
+			"type": "string"
+		}
+	]
+}

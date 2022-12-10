@@ -18,4 +18,12 @@ const checkDbConnection = async () => {
 	}
 };
 
-module.exports = { sequelize, DataTypes, checkDbConnection };
+const shouldPopulate = async () => {
+	const tables = await sequelize.query('SELECT * FROM public."Enemies"');
+
+	if (tables[0].length === 0) {
+		require('@populate');
+	}
+};
+
+module.exports = { sequelize, DataTypes, checkDbConnection, shouldPopulate };

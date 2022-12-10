@@ -16,7 +16,7 @@ import { Layout } from 'components/ui';
 import { useAppContext } from 'utils/context';
 
 const App = () => {
-	const { themeType, isAuthenticated } = useAppContext();
+	const { themeType } = useAppContext();
 
 	const theme = createTheme({
 		palette: {

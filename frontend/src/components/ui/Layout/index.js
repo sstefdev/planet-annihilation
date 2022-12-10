@@ -11,7 +11,6 @@ const Layout = ({ children }) => {
 				sx={{
 					position: 'relative',
 					zIndex: 2,
-					margin: '100px 0',
 					height: '100%',
 					width: '100%',
 				}}

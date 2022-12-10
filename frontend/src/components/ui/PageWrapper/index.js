@@ -14,7 +14,6 @@ const PageWrapper = ({ children }) => {
 				justifyContent: 'center',
 				width: '100%',
 				height: 'fit-content',
-
 				backgroundColor: themeType === 'light' ? '#6e85b771' : '#041c3261',
 				padding: '25px',
 				textAlign: 'center',

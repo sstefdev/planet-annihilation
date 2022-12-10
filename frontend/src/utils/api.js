@@ -81,3 +81,14 @@ export const fetchAllEnemies = async () => {
 		console.log(err);
 	}
 };
+
+// army api
+
+export const createArmy = async (strength) => {
+	try {
+		const { data } = await axios.post('/army', { strength });
+		return data;
+	} catch (err) {
+		console.log(err);
+	}
+};

@@ -13,7 +13,7 @@ const Enemies = () => {
 				These are the Enemies
 			</Typography>
 			<Box className="entities">
-				{enemies.map((enemy) => (
+				{enemies?.map((enemy) => (
 					<InfoBox {...enemy} key={enemy.id} link={`/enemies/${enemy.id}`} />
 				))}
 			</Box>

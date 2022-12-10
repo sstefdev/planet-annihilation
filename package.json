@@ -1,0 +1,27 @@
+{
+  "name": "planet-annhiliation",
+  "version": "1.0.0",
+  "description": "<img src=\"./frontend/public/android-chrome-192x192.png\" width='80px' />",
+  "main": "index.js",
+  "scripts": {
+    "install-fe": "cd frontend && npm install",
+    "start-fe": "cd frontend && npm start",
+    "install-be": "cd backend && npm install",
+    "start-be": "cd backend && npm run dev",
+    "install": "npm run install-fe && npm run install-be",
+    "dev": "concurrently --kill-others \"npm run start-fe\" \"npm run start-be\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sstefdev/tubics-test-planet-annihilation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sstefdev/tubics-test-planet-annihilation/issues"
+  },
+  "homepage": "https://github.com/sstefdev/tubics-test-planet-annihilation#readme",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}

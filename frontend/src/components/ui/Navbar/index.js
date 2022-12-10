@@ -69,9 +69,11 @@ const Navbar = () => {
 	return (
 		<AppBar
 			position="static"
-			sx={{ width: '100%', zIndex: 2 }}
-			style={{
+			sx={{
+				width: '100%',
+				zIndex: 2,
 				backgroundColor: themeType === 'light' ? '#6E85B7' : '#041C32',
+				marginBottom: '20px',
 			}}
 		>
 			<Container maxWidth="xl">

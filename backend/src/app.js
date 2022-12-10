@@ -3,14 +3,15 @@ require('@utils/env-handler')();
 const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
+const path = require('path');
 require('@config/passport-setup');
 const session = require('express-session');
-const { sequelize, checkDbConnection } = require('@config/db');
+const { sequelize, checkDbConnection, shouldPopulate } = require('@config/db');
 const port = process.env.PORT || 3010;
 const app = express();
 
 // Cors config
-const whitelist = ['http://localhost:3000'];
+const whitelist = ['http://localhost:3000', 'http://localhost:3010'];
 const corsOptions = {
 	origin: function (origin, callback) {
 		if (!origin || whitelist.indexOf(origin) !== -1) {
@@ -54,11 +55,15 @@ app.use('/api/highscores', require('@routes/highscore-routes'));
 app.use('/api/planets', require('@routes/planet-routes'));
 app.use('/api/starships', require('@routes/starship-routes'));
 app.use('/api/enemies', require('@routes/enemy-routes'));
+app.use('/api/army', require('@routes/army-routes'));
+app.use('/api-docs', (_req, res) => {
+	res.sendFile(path.resolve('api-docs/index.html'));
+});
 
 checkDbConnection();
 
 // Sequelize db sync
-sequelize.sync().then((req) => {
-	require('@populate');
+sequelize.sync().then((r) => {
+	shouldPopulate();
 	app.listen(port, () => console.log(`App listening on port ${port}`));
 });

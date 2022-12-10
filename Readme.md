@@ -29,6 +29,7 @@ The following technologies were used to develop this project:
 To install the project locally follow these steps:
 
 - You will need to have Node.js installed on your machine
+- Run `npm install` in the main directory
 - Also to mention you can run both projects separately, or together with the following commands:
   - Install FE: `npm run install-fe`
   - Run FE: `npm run start-fe`

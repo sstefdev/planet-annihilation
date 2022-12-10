@@ -38,7 +38,7 @@ const App = () => {
 			<CssBaseline />
 			<Layout>
 				<Routes>
-					<Route path="/" element={isAuthenticated ? <Dashboard /> : <LoginAndRegister />} />
+					<Route path="/" element={<Dashboard />} />
 					<Route path="/login" element={<LoginAndRegister />} />
 					<Route path="/game" element={<Game />} />
 					<Route path="/enemies">
@@ -49,7 +49,7 @@ const App = () => {
 						<Route index element={<Planets />} />
 						<Route path=":id" element={<Planet />} />
 					</Route>
-					<Route path="/spaceships">
+					<Route path="/starships">
 						<Route index element={<Starships />} />
 						<Route path=":id" element={<Starship />} />
 					</Route>

@@ -24,13 +24,13 @@ import axios from 'utils/axiosInstance';
 const pages = [
 	{ label: 'Play', link: '/game' },
 	{ label: 'Planets', link: '/planets' },
-	{ label: 'Spaceships', link: '/spaceships' },
+	{ label: 'Starships', link: '/starships' },
 	{ label: 'Enemies', link: '/enemies' },
 ];
 
 const Navbar = () => {
 	const navigate = useNavigate();
-	const { themeType, setThemeType, user, setUser, setIsAuthenticated, setJwtToken } = useAppContext();
+	const { themeType, user, setUser, isAuthenticated, setThemeType, setIsAuthenticated, setJwtToken } = useAppContext();
 	const [anchorElNav, setAnchorElNav] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -75,59 +75,62 @@ const Navbar = () => {
 			}}
 		>
 			<Container maxWidth="xl">
-				<Toolbar disableGutters>
+				<Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
 					<Logo mobile />
-					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-						<IconButton
-							size="large"
-							aria-label="account of current user"
-							aria-controls="menu-appbar"
-							aria-haspopup="true"
-							onClick={handleOpenNavMenu}
-							color="inherit"
-						>
-							<MenuIcon />
-						</IconButton>
-						<Menu
-							id="menu-appbar"
-							anchorEl={anchorElNav}
-							anchorOrigin={{
-								vertical: 'bottom',
-								horizontal: 'left',
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: 'top',
-								horizontal: 'left',
-							}}
-							open={Boolean(anchorElNav)}
-							onClose={handleCloseNavMenu}
-							sx={{
-								display: { xs: 'block', md: 'none' },
-							}}
-						>
-							{pages.map(({ label, link }) => (
-								<MenuItem LinkComponent={Link} to={link} key={label} onClick={handleCloseNavMenu}>
-									<Typography sx={{ color: themeType === 'light' ? '#041c32' : '#C4D7E0' }} textAlign="center">
-										{label}
-									</Typography>
-								</MenuItem>
-							))}
-						</Menu>
-					</Box>
+					{isAuthenticated && (
+						<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+							<IconButton
+								size="large"
+								aria-label="account of current user"
+								aria-controls="menu-appbar"
+								aria-haspopup="true"
+								onClick={handleOpenNavMenu}
+								color="inherit"
+							>
+								<MenuIcon />
+							</IconButton>
+							<Menu
+								id="menu-appbar"
+								anchorEl={anchorElNav}
+								anchorOrigin={{
+									vertical: 'bottom',
+									horizontal: 'left',
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'left',
+								}}
+								open={Boolean(anchorElNav)}
+								onClose={handleCloseNavMenu}
+								sx={{
+									display: { xs: 'block', md: 'none' },
+								}}
+							>
+								{pages.map(({ label, link }) => (
+									<MenuItem LinkComponent={Link} to={link} key={label} onClick={handleCloseNavMenu}>
+										<Typography sx={{ color: themeType === 'light' ? '#041c32' : '#C4D7E0' }} textAlign="center">
+											{label}
+										</Typography>
+									</MenuItem>
+								))}
+							</Menu>
+						</Box>
+					)}
 					<Logo />
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-						{pages.map(({ label, link }, index) => (
-							<Button
-								LinkComponent={Link}
-								key={index}
-								onClick={handleCloseNavMenu}
-								sx={{ my: 2, color: themeType === 'light' ? '#041c32' : '#C4D7E0', display: 'block' }}
-								to={link}
-							>
-								{label}
-							</Button>
-						))}
+						{isAuthenticated &&
+							pages.map(({ label, link }, index) => (
+								<Button
+									LinkComponent={Link}
+									key={index}
+									onClick={handleCloseNavMenu}
+									sx={{ my: 2, color: themeType === 'light' ? '#041c32' : '#C4D7E0', display: 'block' }}
+									to={link}
+								>
+									{label}
+								</Button>
+							))}
 					</Box>
 					<FormControlLabel
 						checked={themeType === 'dark'}
